@@ -1,0 +1,48 @@
+/* color palette from <https://github.com/vuejs/theme> */
+// :root {
+//   --fz-14: 14px;
+//   --very-dark-blue: hsl(200, 15%, 8%);
+//   --dark-gray: hsl(0, 0%, 52%);
+//   --very-light-gray: hsl(0, 0%, 98%);
+//   --white: hsl(0, 0%, 100%);
+
+//   --fz-14: 14px;
+//   --fz-16: 16px;
+
+//   --light-mode-text: $very-dark-blue;
+//   --light-mode-input: $very-dark-blue;
+//   --light-mode-background: $very-light-gray;
+//   --light-mode-elements: $white;
+// }
+$mobile: 375px;
+$tablet: 768px;
+$desktop: 1440px;
+
+$very-dark-blue: hsl(200, 15%, 8%);
+$dark-gray: hsl(0, 0%, 52%);
+$very-light-gray: hsl(0, 0%, 98%);
+$white: hsl(0, 0%, 100%);
+
+$fz-14: 14px;
+$fz-16: 16px;
+
+/* semantic color variables for this project */
+
+$light-mode-text: $very-dark-blue;
+$light-mode-input: $dark-gray;
+$light-mode-background: $very-light-gray;
+$light-mode-elements: $white;
+// :root {
+//   --color-background: var(--vt-c-white);
+//   --color-background-soft: var(--vt-c-white-soft);
+//   --color-background-mute: var(--vt-c-white-mute);
+
+//   --color-border: var(--vt-c-divider-light-2);
+//   --color-border-hover: var(--vt-c-divider-light-1);
+
+//   --color-heading: var(--vt-c-text-light-1);
+//   --color-text: var(--vt-c-text-light-1);
+
+//   --section-gap: 160px;
+// }
+

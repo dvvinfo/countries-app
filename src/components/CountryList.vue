@@ -1,6 +1,11 @@
 <template>
   <div class="country-list">
-    <CountryCard />
+    <CountryCard
+      v-for="country in filteredCountries"
+      :key="country.alpha3Code"
+      :country="country"
+    />
+    <div v-if="filteredCountries.length === 0">Нет данных</div>
   </div>
 </template>
 
@@ -10,6 +15,24 @@ export default {
   name: 'CountryList',
   components: {
     CountryCard
+  },
+
+  props: {
+    countries: {
+      type: Array,
+      required: true
+    },
+    searchQuery: {
+      type: String,
+      required: true
+    }
+  },
+  computed: {
+    filteredCountries() {
+      return this.countries.filter((country) =>
+        country.name.toLowerCase().includes(this.searchQuery.toLowerCase())
+      )
+    }
   }
 }
 </script>

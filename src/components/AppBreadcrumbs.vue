@@ -1,7 +1,7 @@
 <template>
   <div class="breadcrumbs">
     <button class="breadcrumbs__button">
-      <RouterLink class="breadcrumbs__link" to="/home"><BackIcon /> <span>Back</span></RouterLink>
+      <RouterLink class="breadcrumbs__link" to="/"><BackIcon /> <span>Back</span></RouterLink>
     </button>
   </div>
 </template>
@@ -38,8 +38,6 @@ export default {
   }
 }
 
-@media screen and (min-width: $mobile) {
-}
 @media screen and (min-width: $desktop) {
   .breadcrumbs {
     &__button {

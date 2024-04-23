@@ -1,33 +1,39 @@
 <template>
   <div class="card">
-    <div class="card__image">
-      <img src="../assets/1280px-Flag_of_Germany.svg.png" alt="" />
-    </div>
+    <router-link :to="'/detail/' + country.alpha3Code" class="card__link">
+      <div class="card__image">
+        <img :src="country.flags.svg" :alt="country.name" />
+      </div>
 
-    <div class="card__body">
-      <h3 class="card__title">Germany</h3>
-      <div class="info">
-        <div class="info__item">
-          <span class="info__title">Population: </span>
-          <span class="info__value">81,770,900</span>
-        </div>
-        <div class="info__item">
-          <span class="info__title">Region: </span>
-          <span class="info__value">Europe</span>
-        </div>
-        <div class="info__item">
-          <span class="info__title">Capital: </span>
-          <span class="info__value"> Berlin</span>
+      <div class="card__body">
+        <h3 class="card__title">{{ country.name }}</h3>
+        <div class="info">
+          <div class="info__item">
+            <span class="info__title">Population: </span>
+            <span class="info__value">{{ country.population }}</span>
+          </div>
+          <div class="info__item">
+            <span class="info__title">Region: </span>
+            <span class="info__value">{{ country.region }}</span>
+          </div>
+          <div class="info__item">
+            <span class="info__title">Capital: </span>
+            <span class="info__value"> {{ country.capital }}</span>
+          </div>
         </div>
       </div>
-    </div>
+    </router-link>
   </div>
 </template>
 
 <script>
 export default {
-  setup() {
-    return {}
+  name: 'CountryCard',
+  props: {
+    country: {
+      type: Object,
+      required: true
+    }
   }
 }
 </script>
@@ -38,8 +44,9 @@ export default {
 .card {
   background: $light-mode-elements;
 
-  box-shadow: 0px 0px 7px 2px rgba(0, 0, 0, 0.0294384);
+  box-shadow: 0px 0px 7px 7px rgba(0, 0, 0, 0.0294384);
   border-radius: 5px;
+
   &__image {
     width: 100%;
     height: 160px;
@@ -59,6 +66,9 @@ export default {
     font-weight: 700;
     margin-bottom: 16px;
   }
+  &__link {
+    text-decoration: none;
+  }
 
   .info__item {
     margin-bottom: 8px;
@@ -68,10 +78,10 @@ export default {
     :last-child {
       margin-bottom: 0;
     }
-    &__title {
-      font-weight: 700;
-    }
   }
+}
+.info__title {
+  font-weight: 700;
 }
 
 @media screen and (min-width: $mobile) {

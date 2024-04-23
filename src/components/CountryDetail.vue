@@ -1,51 +1,56 @@
 <template>
-  <div class="country-detail">
+  <div class="loader" v-if="loading">
+    <AppLoader />
+  </div>
+  <div v-else class="country-detail">
     <div class="country-detail__image">
-      <img src="../assets/FLAG.png" alt="" />
+      <img :src="country.flags.svg" :alt="country.name" />
     </div>
 
     <div class="country-detail__body">
-      <h3 class="country-detail__title">Germany</h3>
+      <h3 class="country-detail__title">{{ country.name }}</h3>
       <div class="country-detail__info">
         <div class="info">
           <div class="info__item">
             <span class="info__title">Population: </span>
-            <span class="info__value">81,770,900</span>
+            <span class="info__value">{{ country.population }}</span>
           </div>
           <div class="info__item">
             <span class="info__title">Region: </span>
-            <span class="info__value">Europe</span>
+            <span class="info__value">{{ country.region }}</span>
           </div>
           <div class="info__item">
             <span class="info__title">Sub Region: </span>
-            <span class="info__value">Western Europe</span>
+            <span class="info__value">{{ country.subregion }}</span>
           </div>
           <div class="info__item">
             <span class="info__title">Capital: </span>
-            <span class="info__value"> Berlin</span>
+            <span class="info__value"> {{ country.capital }}</span>
           </div>
         </div>
         <div class="info">
           <div class="info__item">
             <span class="info__title">Top Level Domain: </span>
-            <span class="info__value">.be</span>
+            <span class="info__value">{{ country.topLevelDomain[0] }}</span>
           </div>
           <div class="info__item">
             <span class="info__title">Currencies: </span>
-            <span class="info__value">Euro</span>
+            <span class="info__value">{{ country.currencies[0].name }}</span>
           </div>
           <div class="info__item">
             <span class="info__title">Languages: </span>
-            <span class="info__value"> Dutch, French, German</span>
+            <span class="info__value">
+              <span v-for="lang in country.languages" :key="lang.name">{{ lang.name }}</span></span
+            >
           </div>
         </div>
       </div>
-      <div class="country-detail__footer">
+      <div class="country-detail__footer" v-if="country.borders">
         <h3 class="country-detail__footer-title">Border Countries:</h3>
         <div class="tags">
-          <div class="tag">France</div>
-          <div class="tag">France</div>
-          <div class="tag">France</div>
+          <div class="tag" v-for="(border, index) in country.borders" :key="index">
+            {{ border }}
+          </div>
         </div>
       </div>
     </div>
@@ -53,14 +58,47 @@
 </template>
 
 <script>
+import AppLoader from './AppLoader.vue'
 export default {
-  name: 'CountryDetail'
+  name: 'CountryDetail',
+  components: {
+    AppLoader
+  },
+
+  data() {
+    return {
+      loading: true,
+      country: null
+    }
+  },
+  created() {
+    const countryCode = this.$route.params.alpha3Code
+    this.loadCountryData(countryCode)
+  },
+  methods: {
+    async loadCountryData(countryCode) {
+      try {
+        const response = await fetch('/data.json')
+        const data = await response.json()
+        // Поиск данных о стране по countryCode
+        this.country = data.find((country) => country.alpha3Code === countryCode)
+        this.loading = false
+      } catch (error) {
+        console.error('Error loading country data:', error)
+      } finally {
+        this.loading = false
+      }
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 @import '../assets/variables.scss';
-
+.loader {
+  display: flex;
+  justify-content: center;
+}
 .country-detail {
   display: flex;
   align-items: center;
@@ -91,6 +129,7 @@ export default {
   &__footer-title {
     color: $light-mode-text;
     font-weight: 700;
+    flex-shrink: 0;
   }
   .info {
     color: $light-mode-text;
@@ -107,6 +146,7 @@ export default {
 .tags {
   display: flex;
   gap: 10px;
+  flex-wrap: wrap;
   font-size: $fz-14;
   .tag {
     min-width: 96px;
@@ -126,14 +166,14 @@ export default {
     flex-direction: column;
     gap: 44px;
     &__image {
-    max-width: 320px;
-    height: auto;
-    width: 100%;
-    img {
-      max-width: 100%;
-      height: 100%;
+      max-width: 320px;
+      height: auto;
+      width: 100%;
+      img {
+        max-width: 100%;
+        height: 100%;
+      }
     }
-  }
     &__title {
       font-size: 22px;
     }
@@ -158,14 +198,14 @@ export default {
     flex-direction: row;
     gap: 120px;
     &__image {
-    max-width: 560px;
-    height: 401px;
-    width: 100%;
-    img {
-      max-width: 100%;
-      height: 100%;
+      max-width: 560px;
+      height: 401px;
+      width: 100%;
+      img {
+        max-width: 100%;
+        height: 100%;
+      }
     }
-  }
     &__title {
       font-size: 32px;
     }
@@ -177,8 +217,8 @@ export default {
     }
     &__footer {
       flex-direction: row;
+      align-items: center;
       margin-top: 68px;
-      
     }
     .info {
       font-size: $fz-16;
